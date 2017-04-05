@@ -5,6 +5,9 @@
  */
 package algobreizh.model;
 
+import java.sql.Date;
+import java.sql.Time;
+
 /**
  *
  * @author user
@@ -12,21 +15,24 @@ package algobreizh.model;
 public class Meeting {
     
     private int id;
-    private int date;
+    private Date date;
+    private Time hour;
     private Customer customer;
     private Seller seller;
     private String info;
     
-    public Meeting(int d, Customer c, Seller s, String i){
+    public Meeting(Date d, Time h, Customer c, Seller s, String i){
         date = d;
+        hour = h;
         customer = c;
         seller = s;
         info = i;
     }
     
-    public Meeting(int id, int d, Customer c, Seller s, String i){
+    public Meeting(int id, Date d, Time h, Customer c, Seller s, String i){
         this.id = id;
         date = d;
+        hour = h;
         customer = c;
         seller = s;
         info = i;
@@ -36,8 +42,12 @@ public class Meeting {
         return id;
     }
     
-    public int getDate(){
+    public Date getDate(){
         return date;
+    }
+    
+    public Time getHour(){
+        return hour;
     }
     
     public Customer getCustomer(){
@@ -56,8 +66,12 @@ public class Meeting {
         id = i;
     }
     
-    public void setDate(int d){
+    public void setDate(Date d){
         date = d;
+    }
+    
+    public void setHour(Time h){
+        hour = h;
     }
     
     public void setCustomer(Customer c){

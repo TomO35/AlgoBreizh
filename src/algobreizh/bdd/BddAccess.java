@@ -22,7 +22,7 @@ public class BddAccess {
 	Statement stmt = null;
 	ResultSet res = null;
 	try {
-            connexion = DriverManager.getConnection("jdbc:mysql://159.180.230.207?user=groupe1&password=password&autoReconnect=true&useSSL=false");
+            connexion = DriverManager.getConnection("jdbc:mysql://159.180.230.207/sio_groupe1?user=groupe1&password=password&autoReconnect=true&useSSL=false");
             stmt = connexion.createStatement();
             if(stmt.execute(requete)) {
 		res = stmt.getResultSet();

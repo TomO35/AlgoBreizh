@@ -8,8 +8,10 @@ package algobreizh.bdd;
 import algobreizh.model.Customer;
 import algobreizh.model.Meeting;
 import algobreizh.model.Seller;
+import java.sql.Date;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Time;
 import java.util.ArrayList;
 
 /**
@@ -18,41 +20,49 @@ import java.util.ArrayList;
  */
 public class BddClient {
     
-    BddAccess bdda = new BddAccess();
-    
     public void createCustomer(Customer c){
-        bdda.connectBdd();
         String querry = "INSERT INTO client VALUES (\'" + c.getName() 
                 + "\',\'" + c.getFirstname() + "\',\'" + c.getCompany()
                 + "\',\'" + c.getaddress() + "\',\'" + c.getCp()
                 + "\',\'" + c.getVille() + "\')";
-        Tools.execute(querry);
+        BddAccess.execute(querry);
+    }
+    
+    public void modifyCustomer(Customer c){
+        String querry = "UPDATE client SET (name = \'" + c.getName() 
+                + "\', firstname = \'" + c.getFirstname()
+                + "\', company = \'" + c.getCompany()
+                + "\', address = \'" + c.getaddress()
+                + "\', cp = \'" + c.getCp()
+                + "\', city = \'" + c.getVille() + "\')";
+        BddAccess.execute(querry);
     }
     
     public void createMeeting(Meeting m){
-        bdda.connectBdd();
         String querry = "INSERT INTO meeting VALUES (\'" + m.getDate()
-                + "\',\'" + m.getCustomer().getId() + "\',\'"
-                + m.getSeller().getId() + "\',\'" + m.getInfo() + "\')";
-        Tools.execute(querry);
+                + "\',\'" + m.getHour()
+                + "\',\'" + m.getCustomer().getId()
+                + "\',\'" + m.getSeller().getId()
+                + "\',\'" + m.getInfo() + "\')";
+        BddAccess.execute(querry);
     }
     
     public ArrayList<Meeting> getMeetings(Seller s){
-        bdda.connectBdd();
         ArrayList<Meeting> meetings = new ArrayList<>();
         String querry = "SELECT * FROM meeting WHERE id_seller = " + s.getId();
-        ResultSet res = Tools.execute(querry);
+        ResultSet res = BddAccess.execute(querry);
         if (res != null) {
             try {
 		while (res.next()) {
                     int id = res.getInt("id_meeting");
-                    int date = res.getInt("date_meeting");
+                    Date date = res.getDate("date_meeting");
+                    Time hour = res.getTime("hour_meeting");
                     int id_customer = res.getInt("id_customer");
                     Customer customer = getCustomer(id_customer);
                     int id_seller = res.getInt("id_seller");
                     Seller seller = getSeller(id_seller);
                     String info = res.getString("info");
-                    meetings.add(new Meeting(id,date,customer,seller,info));
+                    meetings.add(new Meeting(id,date,hour,customer,seller,info));
 		}
             } catch (SQLException e) {
             }
@@ -61,10 +71,9 @@ public class BddClient {
     }
     
     public ArrayList<Customer> getCustomers(){
-        bdda.connectBdd();
         ArrayList<Customer> customers = new ArrayList<>();
         String querry = "SELECT * FROM Customer";
-        ResultSet res = Tools.execute(querry);
+        ResultSet res = BddAccess.execute(querry);
         if (res != null) {
             try {
 		while (res.next()) {
@@ -85,10 +94,9 @@ public class BddClient {
     }
     
     public Customer getCustomer(int id){
-        bdda.connectBdd();
         String querry = "SELECT * FROM customer WHERE id_customer = " + id;
         Customer customer = new Customer();
-        ResultSet res = Tools.execute(querry);
+        ResultSet res = BddAccess.execute(querry);
         if (res != null) {
             try {
 		while (res.next()) {
@@ -107,10 +115,9 @@ public class BddClient {
     }
     
     public Seller getSeller(int id){
-        bdda.connectBdd();
         String querry = "SELECT * FROM seller WHERE id_seller = " + id;
         Seller seller = new Seller();
-        ResultSet res = Tools.execute(querry);
+        ResultSet res = BddAccess.execute(querry);
         if (res != null) {
             try {
 		while (res.next()) {
