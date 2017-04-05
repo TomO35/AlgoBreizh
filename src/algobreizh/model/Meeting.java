@@ -8,10 +8,6 @@ package algobreizh.model;
 import java.sql.Date;
 import java.sql.Time;
 
-/**
- *
- * @author user
- */
 public class Meeting {
     
     private int id;

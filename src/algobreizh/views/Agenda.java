@@ -5,43 +5,46 @@
  */
 package algobreizh.views;
 
-import java.awt.Dimension;
-import java.awt.GridLayout;
-import java.util.ArrayList;
+import java.awt.CardLayout;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import javax.swing.JButton;
-import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
-/**
- *
- * @author user
- */
-public class Agenda extends JPanel {
+public final class Agenda extends JPanel {
     
     JButton month, week;
-    ArrayList<String> jours; 
-    JLabel lundi, mardi, mercredi, jeudi, vendredi, samedi;
-    JLabel mois, semaine;
+    CardLayout cl = new CardLayout();
     
-    
-    public Agenda(){
-        this.jours = new ArrayList<String>("Lundi","Mardi","Mercredi","Jeudi","Vendredi","Samedi");
-        setLayout(new GridLayout(0, 2));
+    public Agenda(){;
+        this.setLayout(cl);
         
+        Weekly w = new Weekly();
+        month = w.getButton();
+        month.setText("Voir Mois");
+        onClick(month, "month");
+        this.add(w,"week");
         
+        Monthly s = new Monthly();
+        week = w.getButton();
+        week.setText("Voir Semaine");
+        onClick(week, "week");
+        this.add(s,"month");
     }
     
-    public void weekly() {
-        setLayout(new GridLayout(23, 7));
-        
-        
+    public void onClick(JButton b, String s){
+        MouseAdapter adapteur = new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                clic(s);
+            }
+        };
+        b.addMouseListener(adapteur);
     }
     
-    public void monthly() {
-        setLayout(new GridLayout(6, 7));
-        
-        
+    public void clic(String s) {
+        cl.show(Agenda.this, s);
     }
-  
+
 }

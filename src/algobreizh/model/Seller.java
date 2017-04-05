@@ -5,10 +5,6 @@
  */
 package algobreizh.model;
 
-/**
- *
- * @author user
- */
 public class Seller {
     
     private int id;

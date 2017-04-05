@@ -8,13 +8,8 @@ package algobreizh.bdd;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
-import java.sql.SQLException;
 import java.sql.Statement;
 
-/**
- *
- * @author user
- */
 public class BddAccess {
     
     public static ResultSet execute(String requete) {

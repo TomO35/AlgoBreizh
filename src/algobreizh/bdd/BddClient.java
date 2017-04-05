@@ -14,17 +14,13 @@ import java.sql.SQLException;
 import java.sql.Time;
 import java.util.ArrayList;
 
-/**
- *
- * @author user
- */
 public class BddClient {
     
     public void createCustomer(Customer c){
         String querry = "INSERT INTO client VALUES (\'" + c.getName() 
                 + "\',\'" + c.getFirstname() + "\',\'" + c.getCompany()
-                + "\',\'" + c.getaddress() + "\',\'" + c.getCp()
-                + "\',\'" + c.getVille() + "\')";
+                + "\',\'" + c.getAddress() + "\',\'" + c.getCp()
+                + "\',\'" + c.getCity() + "\')";
         BddAccess.execute(querry);
     }
     
@@ -32,9 +28,9 @@ public class BddClient {
         String querry = "UPDATE client SET (name = \'" + c.getName() 
                 + "\', firstname = \'" + c.getFirstname()
                 + "\', company = \'" + c.getCompany()
-                + "\', address = \'" + c.getaddress()
+                + "\', address = \'" + c.getAddress()
                 + "\', cp = \'" + c.getCp()
-                + "\', city = \'" + c.getVille() + "\')";
+                + "\', city = \'" + c.getCity() + "\')";
         BddAccess.execute(querry);
     }
     
@@ -80,11 +76,13 @@ public class BddClient {
                     int id = res.getInt("id_customer");
                     String name = res.getString("name");
                     String firstname = res.getString("firstname");
+                    int phone = res.getInt("phone");
+                    String email = res.getString("email");
                     String company = res.getString("company");
                     String address = res.getString("address");
                     String cp = res.getString("cp");
                     String ville = res.getString("ville");
-                    customers.add(new Customer(id,name,firstname,company,address,cp,ville));
+                    customers.add(new Customer(id,name,firstname,phone,email,company,address,cp,ville));
 		}
             } catch (SQLException e) {
             }
@@ -102,11 +100,13 @@ public class BddClient {
 		while (res.next()) {
                     String name = res.getString("name");
                     String firstname = res.getString("firstname");
+                    int phone = res.getInt("phone");
+                    String email = res.getString("email");
                     String company = res.getString("company");
                     String address = res.getString("address");
                     String cp = res.getString("cp");
                     String ville = res.getString("ville");
-                    customer = new Customer(id,name,firstname,company,address,cp,ville);
+                    customer = new Customer(id,name,firstname,phone,email,company,address,cp,ville);
 		}
             } catch (SQLException e) {
             }
