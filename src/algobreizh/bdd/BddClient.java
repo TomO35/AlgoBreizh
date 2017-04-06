@@ -68,23 +68,24 @@ public class BddClient {
     
     public ArrayList<Customer> getCustomers(){
         ArrayList<Customer> customers = new ArrayList<>();
-        String querry = "SELECT * FROM Customer";
+        String querry = "SELECT * FROM client";
         ResultSet res = BddAccess.execute(querry);
         if (res != null) {
             try {
 		while (res.next()) {
-                    int id = res.getInt("id_customer");
+                    int id = res.getInt("id_client");
                     String name = res.getString("name");
                     String firstname = res.getString("firstname");
                     int phone = res.getInt("phone");
                     String email = res.getString("email");
-                    String company = res.getString("company");
+                    String company = res.getString("society");
                     String address = res.getString("address");
-                    String cp = res.getString("cp");
-                    String ville = res.getString("ville");
+                    String cp = res.getString("CP");
+                    String ville = res.getString("city");
                     customers.add(new Customer(id,name,firstname,phone,email,company,address,cp,ville));
 		}
             } catch (SQLException e) {
+                System.out.println("Problem Récupération Client : " + e);
             }
         }
         
@@ -92,7 +93,7 @@ public class BddClient {
     }
     
     public Customer getCustomer(int id){
-        String querry = "SELECT * FROM customer WHERE id_customer = " + id;
+        String querry = "SELECT * FROM client WHERE id_client = " + id;
         Customer customer = new Customer();
         ResultSet res = BddAccess.execute(querry);
         if (res != null) {
@@ -102,10 +103,10 @@ public class BddClient {
                     String firstname = res.getString("firstname");
                     int phone = res.getInt("phone");
                     String email = res.getString("email");
-                    String company = res.getString("company");
+                    String company = res.getString("society");
                     String address = res.getString("address");
-                    String cp = res.getString("cp");
-                    String ville = res.getString("ville");
+                    String cp = res.getString("CP");
+                    String ville = res.getString("city");
                     customer = new Customer(id,name,firstname,phone,email,company,address,cp,ville);
 		}
             } catch (SQLException e) {
